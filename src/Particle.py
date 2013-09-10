@@ -5,7 +5,7 @@ Created on 10.09.2013
 '''
 
 import Vector
-GRAVITATION = 6.67384e11
+GRAVITATION = 6.67384e-11
 
 class Particle(object):
     '''
