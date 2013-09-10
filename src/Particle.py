@@ -6,6 +6,7 @@ Created on 10.09.2013
 
 import Vector
 GRAVITATION = 6.67384e-11
+COLLISION_RADIUS_FACTOR = 0.2
 
 class Particle(object):
     '''
@@ -20,6 +21,7 @@ class Particle(object):
         self.mass = mass
         self.pos = Vector.Vector(x, y)
         self.movement = Vector.Vector()
+        self.collisionRadius = (COLLISION_RADIUS_FACTOR * mass)
         
     def calcMovement(self, particleField, dt):
         '''
@@ -28,8 +30,14 @@ class Particle(object):
         force = Vector.Vector()
         for particle in particleField:
             r2 = Vector.DistanceSqrd(self.pos, particle.pos)        #Das Quadrat des Abstands der Partikel
+            if r2 <= self.collisionRadius:
+                self.mass += particle.mass
+                self.collisionRadius = (COLLISION_RADIUS_FACTOR * self.mass)
+                particleField.remove(particle)
+            
             if r2:
                 force += Vector.Normalize(self.pos - particle.pos) * (GRAVITATION * (self.mass * particle.mass) / r2) #Berechnet die Gesamtkraft
+               
         a = force / self.mass       #f = m * a --> a = f / m     Beschleunigung
         v = a * dt                  #a = v / t --> v = a * t     Geschwindigkeit
         self.movement += v
