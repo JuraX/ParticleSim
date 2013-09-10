@@ -8,7 +8,7 @@ import Vector
 import math
 
 GRAVITATION = 6.67384e-11
-COLLISION_RADIUS_FACTOR = 12
+COLLISION_RADIUS_FACTOR = 15
 FACTOR = 10000000000000
 
 class Particle(object):
@@ -37,9 +37,11 @@ class Particle(object):
             if particle != self:
                 r2 = Vector.DistanceSqrd(self.pos, particle.pos)        #Das Quadrat des Abstands der Partikel
                 if math.sqrt(r2) <= self.collisionRadius:
+                    masse1 = self.mass
+                    masse2 = particle.mass
                     self.mass += particle.mass
                     self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass))    #a = r**2 * pi  a/pi = r**2 r = sqrt(a/pi)
-                    self.movement += particle.movement
+                    self.movement = (self.movement * masse1 + particle.movement * masse2) / self.mass
                     print "PARTIKEL KOMBINIERT"
                     particleField.remove(particle)
                     

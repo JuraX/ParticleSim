@@ -17,7 +17,7 @@ COORDS_MAX = 300.
 if __name__ == '__main__':
     g = GUI.GUI()
     particles = []
-    for i in range(10):
+    for i in range(20):
         particles.append(Particle.Particle(random()*(MASS_MAX - MASS_MIN) + MASS_MIN, random()*(COORDS_MAX - COORDS_MIN) + COORDS_MIN, random()*(COORDS_MAX - COORDS_MIN) + COORDS_MIN))
     while 1:
         for j in particles:
@@ -26,4 +26,4 @@ if __name__ == '__main__':
         for j in particles:
             j.move()
             g.addParticle(j)
-        time.sleep(0.03)
+        time.sleep(0.02)
