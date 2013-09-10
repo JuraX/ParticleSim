@@ -5,8 +5,11 @@ Created on 10.09.2013
 '''
 
 import Vector
+import math
+
 GRAVITATION = 6.67384e-11
-COLLISION_RADIUS_FACTOR = 0.2
+COLLISION_RADIUS_FACTOR = 12
+FACTOR = 10000000000000
 
 class Particle(object):
     '''
@@ -21,7 +24,7 @@ class Particle(object):
         self.mass = mass
         self.pos = Vector.Vector(x, y)
         self.movement = Vector.Vector()
-        self.collisionRadius = (COLLISION_RADIUS_FACTOR * mass)
+        self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass))
         
     def calcMovement(self, particleField, dt):
         '''
@@ -31,20 +34,22 @@ class Particle(object):
         s = len(particleField)
         for i in range(0, s-1):
             particle = particleField[i]
-            r2 = Vector.DistanceSqrd(self.pos, particle.pos)        #Das Quadrat des Abstands der Partikel
-            if r2 <= self.collisionRadius:
-                self.mass += particle.mass
-                self.collisionRadius = (COLLISION_RADIUS_FACTOR * self.mass)
-                particleField.remove(particle)
-                
-                s-=1 # Die Indizes wieder hinbiegen
-                i-=1
-            
-            if r2:
-                force += Vector.Normalize(self.pos - particle.pos) * (GRAVITATION * (self.mass * particle.mass) / r2) #Berechnet die Gesamtkraft
+            if particle != self:
+                r2 = Vector.DistanceSqrd(self.pos, particle.pos)        #Das Quadrat des Abstands der Partikel
+                if math.sqrt(r2) <= self.collisionRadius:
+                    self.mass += particle.mass
+                    self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass))    #a = r**2 * pi  a/pi = r**2 r = sqrt(a/pi)
+                    self.movement += particle.movement
+                    print "PARTIKEL KOMBINIERT"
+                    particleField.remove(particle)
+                    
+                    s-=1 # Die Indizes wieder hinbiegen
+                    i-=1
+                if r2:
+                    force -= Vector.Normalize(self.pos - particle.pos) * (GRAVITATION * (self.mass * particle.mass) / r2) #Berechnet die Gesamtkraft
                
         a = force / self.mass       #f = m * a --> a = f / m     Beschleunigung
-        v = a * dt                  #a = v / t --> v = a * t     Geschwindigkeit
+        v = a * dt * FACTOR                  #a = v / t --> v = a * t     Geschwindigkeit
         self.movement += v
     
     def move(self):
@@ -52,7 +57,6 @@ class Particle(object):
         Bewegt den Partikel
         '''
         self.pos += self.movement
-        print self.pos
         
         
         
