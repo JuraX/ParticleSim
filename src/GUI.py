@@ -14,9 +14,8 @@ from ParticleManager import *
 SIZE = 1000
 
 
-class GUI(Thread):
+class GUI():
     def __init__(self):
-        Thread.__init__(self)
         self.master = Tk()
         
         self.c = Canvas(self.master, width = SIZE, height = SIZE)
@@ -25,7 +24,7 @@ class GUI(Thread):
         self.request_queue = Queue.Queue(maxsize = -1)
         self.result_queue = Queue.Queue(maxsize = -1)
         
-        self.start()
+        self.run()
     
     
     def run(self):
