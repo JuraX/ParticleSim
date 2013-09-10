@@ -18,7 +18,7 @@ class Particle(object):
         Initialisiert die Attribute.
         '''
         self.mass = mass
-        self.pos = Vector(x, y)
+        self.pos = Vector.Vector(x, y)
         self.movement = Vector.Vector()
         
     def calcMovement(self, particleField, dt):
@@ -28,7 +28,19 @@ class Particle(object):
         force = Vector.Vector()
         for particle in particleField:
             r2 = Vector.DistanceSqrd(self.pos, particle.pos)        #Das Quadrat des Abstands der Partikel
-            force += GRAVITATION * (self.mass * particle.mass) / r2 * (self.pos - particle.pos) #Berechnet die Gesamtkraft
+            if r2:
+                force += Vector.Normalize(self.pos - particle.pos) * (GRAVITATION * (self.mass * particle.mass) / r2) #Berechnet die Gesamtkraft
         a = force / self.mass       #f = m * a --> a = f / m     Beschleunigung
-        v = a / dt
+        v = a * dt                  #a = v / t --> v = a * t     Geschwindigkeit
         self.movement += v
+    
+    def move(self):
+        '''
+        Bewegt den Partikel
+        '''
+        self.pos += self.movement
+        print self.pos
+        
+        
+        
+        
