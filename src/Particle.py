@@ -28,12 +28,17 @@ class Particle(object):
         Berechnet den neuen Bewegungsvektor des Partikels. dt = delta Zeit
         '''
         force = Vector.Vector()
-        for particle in particleField:
+        s = len(particleField)
+        for i in range(0, s-1):
+            particle = particleField[i]
             r2 = Vector.DistanceSqrd(self.pos, particle.pos)        #Das Quadrat des Abstands der Partikel
             if r2 <= self.collisionRadius:
                 self.mass += particle.mass
                 self.collisionRadius = (COLLISION_RADIUS_FACTOR * self.mass)
                 particleField.remove(particle)
+                
+                s-=1 # Die Indizes wieder hinbiegen
+                i-=1
             
             if r2:
                 force += Vector.Normalize(self.pos - particle.pos) * (GRAVITATION * (self.mass * particle.mass) / r2) #Berechnet die Gesamtkraft
