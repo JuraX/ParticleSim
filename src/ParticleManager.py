@@ -24,11 +24,10 @@ class ParticleManager(Thread):
         g = self.gui
         particles = []
         for i in range(20):
-            particles.append(Particle.Particle(random()*(MASS_MAX - MASS_MIN) + MASS_MIN, random()*(COORDS_MAX - COORDS_MIN) + COORDS_MIN, random()*(COORDS_MAX - COORDS_MIN) + COORDS_MIN))
+            particles.append(Particle.Particle(random()*(MASS_MAX - MASS_MIN) + MASS_MIN, random()*(COORDS_MAX - COORDS_MIN) + COORDS_MIN, random()*(COORDS_MAX - COORDS_MIN) + COORDS_MIN, g.c))
         while 1:
             for j in particles:
                 j.calcMovement(particles, 0.01)
-            g.clearall()
             for j in particles:
                 j.move()
                 g.addParticle(j)

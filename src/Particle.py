@@ -17,7 +17,7 @@ class Particle(object):
     '''
 
 
-    def __init__(self, mass, x, y):
+    def __init__(self, mass, x, y, gui):
         '''
         Initialisiert die Attribute.
         '''
@@ -25,6 +25,8 @@ class Particle(object):
         self.pos = Vector.Vector(x, y)
         self.movement = Vector.Vector()
         self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass))
+        self.canvas = None
+        self.gui = gui
         
     def calcMovement(self, particleField, dt):
         '''
@@ -32,7 +34,8 @@ class Particle(object):
         '''
         force = Vector.Vector()
         s = len(particleField)
-        for i in range(0, s-1):
+        i = 0
+        while i < len(particleField):
             particle = particleField[i]
             if particle != self:
                 r2 = Vector.DistanceSqrd(self.pos, particle.pos)        #Das Quadrat des Abstands der Partikel
@@ -43,12 +46,11 @@ class Particle(object):
                     self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass))    #a = r**2 * pi  a/pi = r**2 r = sqrt(a/pi)
                     self.movement = (self.movement * masse1 + particle.movement * masse2) / self.mass
                     print "PARTIKEL KOMBINIERT"
+                    self.gui.delete(particle.canvas)
                     particleField.remove(particle)
-                    
-                    s-=1 # Die Indizes wieder hinbiegen
-                    i-=1
                 if r2:
                     force -= Vector.Normalize(self.pos - particle.pos) * (GRAVITATION * (self.mass * particle.mass) / r2) #Berechnet die Gesamtkraft
+            i += 1
                
         a = force / self.mass       #f = m * a --> a = f / m     Beschleunigung
         v = a * dt * FACTOR                  #a = v / t --> v = a * t     Geschwindigkeit
