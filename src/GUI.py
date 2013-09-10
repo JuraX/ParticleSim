@@ -9,8 +9,10 @@ from threading import *
 import Particle
 import math
 import Queue
+from ParticleManager import *
 
-SIZE = 800
+SIZE = 1000
+
 
 class GUI(Thread):
     def __init__(self):
@@ -28,6 +30,7 @@ class GUI(Thread):
     
     def run(self):
         self.timertick()
+        self.pm = ParticleManager(self)
         mainloop()
         
     def addParticle(self, particle):
@@ -64,4 +67,3 @@ class GUI(Thread):
         
 if __name__ == '__main__':   
     g = GUI()
-    g.c.create_oval(300, 300, 300, 300, fill = "blue")
