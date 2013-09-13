@@ -16,7 +16,7 @@ MASS_MAX = 0.1*F
 COORDS = 500.
 SIZE = 1000
 GAUSS = 100
-AMOUT = 100
+AMOUT = 250
 
 class ParticleManager(Thread):
     def __init__(self, gui):
