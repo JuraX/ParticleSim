@@ -1,14 +1,14 @@
+#include "dbg.h"
 #include <stdio.h>
-#include "vmath.h"
+#include "particle.h"
 
 int main(int argc, char *argv[])
 {
-  Vector2d a = create_vector2d(2, 2);
-  print_vector2d(a);
-  printf("%e\n", length(a));
+  Particle *p = create_particle(5, 10, 10);
+  check_mem(p);
+  free_particle(p);
   
-  a = normalize_vector2d(a);
-  print_vector2d(a);
-  printf("%e\n", length(a));
   return 0;
+error:
+  return 1;
 }

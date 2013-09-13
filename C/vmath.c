@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdio.h>
+
 #include "vmath.h"
 
 Vector2d create_vector2d(double x, double y)
@@ -60,5 +61,5 @@ Vector2d normalize_vector2d(Vector2d a)
 
 void print_vector2d(Vector2d a)
 {
-  printf("(%f,%f)\n", a.x, a.y);
+  printf("(%f,%f)", a.x, a.y);
 }
