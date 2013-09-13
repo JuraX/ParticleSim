@@ -9,9 +9,10 @@ from threading import *
 import Particle
 import math
 import Queue
-from ParticleManager import *
+import ParticleManager
 
 SIZE = 1000
+
 
 
 class GUI():
@@ -28,15 +29,15 @@ class GUI():
     
     
     def run(self):
-        self.pm = ParticleManager(self)
+        self.pm = ParticleManager.ParticleManager(self)
         mainloop()
         
     def addParticle(self, particle):
-        radius = math.sqrt(Particle.COLLISION_RADIUS_FACTOR * particle.mass)
+        radius = math.sqrt(Particle.COLLISION_RADIUS_FACTOR * particle.mass)*self.pm.faktor
         if radius < 1:
             radius = 1
         self.c.delete(particle.canvas)
-        particle.canvas = self.c.create_oval(SIZE/2.0 + particle.pos[0] - radius, SIZE/2.0 + particle.pos[1] - radius, SIZE/2.0 + particle.pos[0] + radius, SIZE/2.0 + particle.pos[1] + radius, fill = "black")
+        particle.canvas = self.c.create_oval((SIZE/2.0/self.pm.faktor + particle.pos[0])*self.pm.faktor - radius, (SIZE/2.0/self.pm.faktor + particle.pos[1])*self.pm.faktor - radius, (SIZE/2.0/self.pm.faktor + particle.pos[0])*self.pm.faktor + radius, (SIZE/2.0/self.pm.faktor + particle.pos[1])*self.pm.faktor + radius, fill = "black")
    
     
 

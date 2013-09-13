@@ -23,7 +23,7 @@ class Particle(object):
         '''
         self.mass = mass
         self.pos = Vector.Vector(x, y)
-        self.movement = Vector.Vector()
+        self.movement = Vector.Vector(-self.pos[1], self.pos[0]) * 0.0005
         self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass))
         self.canvas = None
         self.gui = gui
@@ -45,10 +45,11 @@ class Particle(object):
                     self.mass += particle.mass
                     self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass))    #a = r**2 * pi  a/pi = r**2 r = sqrt(a/pi)
                     self.movement = (self.movement * masse1 + particle.movement * masse2) / self.mass
-                    print "PARTIKEL KOMBINIERT"
+                    #print "PARTIKEL KOMBINIERT"
                     self.gui.delete(particle.canvas)
                     particleField.remove(particle)
-                if r2:
+                    del particle
+                elif r2:
                     force -= Vector.Normalize(self.pos - particle.pos) * (GRAVITATION * (self.mass * particle.mass) / r2) #Berechnet die Gesamtkraft
             i += 1
                

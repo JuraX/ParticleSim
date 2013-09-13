@@ -10,25 +10,53 @@ import GUI
 import time
 from threading import *
 
-MASS_MIN = 1
-MASS_MAX = 10
-COORDS_MIN = -300.
-COORDS_MAX = 300.
+F=2
+MASS_MIN = 0.01*F
+MASS_MAX = 0.1*F
+COORDS = 500.
+SIZE = 1000
+GAUSS = 100
+AMOUT = 100
 
 class ParticleManager(Thread):
     def __init__(self, gui):
         Thread.__init__(self)
         self.gui = gui
+        self.high = 500.
+        self.faktor = SIZE / self.high
         self.start()
     def run(self):
         g = self.gui
         particles = []
-        for i in range(20):
-            particles.append(Particle.Particle(random()*(MASS_MAX - MASS_MIN) + MASS_MIN, random()*(COORDS_MAX - COORDS_MIN) + COORDS_MIN, random()*(COORDS_MAX - COORDS_MIN) + COORDS_MIN, g.c))
+        for i in range(AMOUT):
+            particles.append(Particle.Particle(random()*(MASS_MAX - MASS_MIN) + MASS_MIN, (COORDS - gauss(COORDS, GAUSS)), (COORDS - gauss(COORDS, GAUSS)), g.c))
         while 1:
+            start = time.time()
             for j in particles:
                 j.calcMovement(particles, 0.01)
+                if abs(j.pos[0]*2) > self.high and self.faktor > 0.7:
+                    print "+",
+                    self.high *= 1.25
+                    self.faktor = SIZE / self.high
+                    print self.faktor
+                if abs(j.pos[1]*2) > self.high and self.faktor > 0.7:
+                    print "+",
+                    self.high *= 1.25
+                    self.faktor = SIZE / self.high
+                    print self.faktor
             for j in particles:
                 j.move()
                 g.addParticle(j)
-            time.sleep(0.02)
+            if time.time() - start <= 0.01:
+                time.sleep(0.01 - time.time() + start)
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
