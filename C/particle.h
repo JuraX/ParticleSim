@@ -16,4 +16,6 @@ Particle *create_particle(double mass, double x, double y);
 
 void free_particle(Particle *a);
 
+void calc_movement(Particle a, Particle field[], double dt);
+
 #endif

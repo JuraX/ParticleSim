@@ -5,6 +5,10 @@
 
 #include "particle.h"
 
+#define GRAVITATION 6.67384e-11
+#define COLLOSION_RADIUS_FACTOR 15
+#define FACTOR = 10000000000000
+
 Particle *create_particle(double mass, double x, double y)
 {
   Particle *c = malloc(sizeof(Particle));
@@ -18,4 +22,11 @@ Particle *create_particle(double mass, double x, double y)
 void free_particle(Particle *a)
 {
   free(a);
+}
+
+void calc_movement(Particle a, Particle *field, double dt)
+{
+  Vector2d force = create_vector2d(0, 0);
+  int length = (sizeof(field) / sizeof(Particle));
+  int pos;
 }
