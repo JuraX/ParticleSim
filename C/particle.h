@@ -5,6 +5,9 @@
 
 #define DENSITY 2960 //kg/m^3
 
+/** 
+  @brief Stellt einen einzelnen Partikel dar.
+*/
 typedef struct {
     double mass;
     double col_radius;
