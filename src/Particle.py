@@ -8,7 +8,7 @@ import Vector
 import math
 
 GRAVITATION = 6.67384e-11
-COLLISION_RADIUS_FACTOR = 15
+COLLISION_RADIUS_FACTOR = 12
 FACTOR = 10000000000000
 #LIGHTYEAR = 9.4605284 * 10e15
 #RANGE_FACTOR = 1 * LIGHTYEAR
@@ -26,7 +26,7 @@ class Particle(object):
         self.mass = mass
         self.pos = Vector.Vector(x, y)
         self.movement = Vector.Vector(-self.pos[1], self.pos[0]) * 0.0005
-        self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass)) * 500
+        self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass))
         self.canvas = None
         self.gui = gui
         
