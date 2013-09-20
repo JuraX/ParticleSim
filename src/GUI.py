@@ -9,7 +9,7 @@ from threading import *
 import Particle
 import math
 import Queue
-from ParticleManager import *
+import ParticleManager
 
 SIZE = 1000
 
