@@ -10,6 +10,8 @@ import math
 GRAVITATION = 6.67384e-11
 COLLISION_RADIUS_FACTOR = 15
 FACTOR = 10000000000000
+#LIGHTYEAR = 9.4605284 * 10e15
+#RANGE_FACTOR = 1 * LIGHTYEAR
 
 class Particle(object):
     '''
@@ -24,7 +26,7 @@ class Particle(object):
         self.mass = mass
         self.pos = Vector.Vector(x, y)
         self.movement = Vector.Vector(-self.pos[1], self.pos[0]) * 0.0005
-        self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass))
+        self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass)) * 500
         self.canvas = None
         self.gui = gui
         
@@ -45,7 +47,7 @@ class Particle(object):
                     self.mass += particle.mass
                     self.collisionRadius = (math.sqrt(COLLISION_RADIUS_FACTOR * self.mass))    #a = r**2 * pi  a/pi = r**2 r = sqrt(a/pi)
                     self.movement = (self.movement * masse1 + particle.movement * masse2) / self.mass
-                    #print "PARTIKEL KOMBINIERT"
+                    print "PARTIKEL KOMBINIERT"
                     self.gui.delete(particle.canvas)
                     particleField.remove(particle)
                     del particle
