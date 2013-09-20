@@ -35,7 +35,6 @@ class Particle(object):
         Berechnet den neuen Bewegungsvektor des Partikels. dt = delta Zeit
         '''
         force = Vector.Vector()
-        s = len(particleField)
         i = 0
         while i < len(particleField):
             particle = particleField[i]

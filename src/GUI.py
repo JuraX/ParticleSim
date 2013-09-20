@@ -9,10 +9,9 @@ from threading import *
 import Particle
 import math
 import Queue
-import ParticleManager
+from ParticleManager import *
 
 SIZE = 1000
-
 
 
 class GUI():
@@ -68,6 +67,26 @@ class GUI():
             self.dx = - self.startx + event.x
             self.dy = - self.starty + event.y
     
+    #def submit_to_tk(self, callablef, *args, **kwargs):
+    #    self.request_queue.put_nowait((callablef, args, kwargs))
+    #    try:
+    #        return self.result_queue.get_nowait()
+    #    except:
+    #        return
+            
+    #def timertick(self, level = 0):
+    #    #print self.request_queue.empty()
+    #    try:
+    #        callablef, args, kwargs = self.request_queue.get_nowait()
+    #    except Queue.Empty:
+    #        pass
+    #    else:
+    #        #print "something in queue"
+    #        retval = callablef(*args, **kwargs)
+    #        self.result_queue.put_nowait(retval)
+    #    if not self.request_queue.empty(): self.timertick(level + 1)
+    #    if level == 0:
+    #        self.master.after(1, self.timertick)
     def endmove(self, event):
         self.clicked = False
         
@@ -80,16 +99,3 @@ class GUI():
         
 if __name__ == '__main__':   
     g = GUI()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
