@@ -10,13 +10,13 @@ import GUI
 import time
 from threading import *
 
-F=2
-MASS_MIN = 0.01*F
-MASS_MAX = 0.1*F
+SOLAR_MASS = 2#1.9891 * 10e30
+MASS_MIN = 0.01 * SOLAR_MASS
+MASS_MAX = 0.1 * SOLAR_MASS
 COORDS = 500.
 SIZE = 1000
 GAUSS = 100
-AMOUT = 250
+AMOUNT = 250
 
 class ParticleManager(Thread):
     def __init__(self, gui):
@@ -28,7 +28,7 @@ class ParticleManager(Thread):
     def run(self):
         g = self.gui
         particles = []
-        for i in range(AMOUT):
+        for i in range(AMOUNT):
             particles.append(Particle.Particle(random()*(MASS_MAX - MASS_MIN) + MASS_MIN, (COORDS - gauss(COORDS, GAUSS)), (COORDS - gauss(COORDS, GAUSS)), g.c))
         while 1:
             start = time.time()
