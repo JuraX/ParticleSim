@@ -6,8 +6,8 @@
 #define DENSITY 2960 //kg/m^3
 
 /** 
-  @brief Stellt einen einzelnen Partikel dar.
-*/
+ * @brief Stellt einen einzelnen Partikel dar.
+ */
 typedef struct {
     double mass;
     double col_radius;
@@ -19,6 +19,6 @@ Particle *create_particle(double mass, double x, double y);
 
 void free_particle(Particle *a);
 
-void calc_movement(Particle a, Particle field[], double dt);
+void calc_movement(Particle a, Particle field[], int field_length, double dt);
 
 #endif

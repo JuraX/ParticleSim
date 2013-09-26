@@ -24,9 +24,24 @@ void free_particle(Particle *a)
   free(a);
 }
 
-void calc_movement(Particle a, Particle *field, double dt)
+void calc_movement(Particle a, Particle field[], int field_length, double dt)
 {
   Vector2d force = create_vector2d(0, 0);
-  int length = (sizeof(field) / sizeof(Particle));
-  int pos;
+  int length = field_length;
+  int pos = 0;
+
+  while(pos < length) {
+    Particle b = field[pos];
+    if(&b == &a) { continue; } //Keine verechnung mit selbst
+    double d = distance_sqrd(a.position, b.position);
+    if(sqrt(d) <= a.col_radius) {
+      double mass1 = a.mass;
+      double mass2 = b.mass;
+      a->mass = a.mass + b.mass;
+      a->col_radius = cbrt(0.75*(a.mass/DENSITY)/M_PI); //r=sqrt3(0.75*(m/d)/pi)
+      a->movement = (a.movement * mass1 = b.movement * mass2) / a.mass;
+      free(b);
+    }else if(d) {
+    }
+  }
 }
